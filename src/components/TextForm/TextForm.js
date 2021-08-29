@@ -7,7 +7,7 @@ const TextForm = (props) => {
         let newText = text.toUpperCase();
         setText(newText);
     };
-    
+
     const handleLowClick = (e) => {
         e.preventDefault();
         let newText = text.toLowerCase();
@@ -25,21 +25,38 @@ const TextForm = (props) => {
         setText(event.target.value);
     };
 
+    const handleCopy = (e) => {
+        e.preventDefault();
+        var text = document.getElementById("myText");
+        text.select();
+        navigator.clipboard.writeText(text.value);
+    }
+
+    const handleExtraSpaces = (e) => {
+        e.preventDefault();
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "))
+    }
+
+
     const [text, setText] = useState("");
-    
+
     return (
         <div>
             <form className="container my-4">
                 <div className="mb-3">
                     <label id="myBox" className="form-label">{props.heading}</label>
-                    <textarea className="form-control" value={text} onChange={handelOnChange} id="myBox" rows="6" ></textarea>
+                    <textarea className="form-control" value={text} onChange={handelOnChange} id="myText" rows="6" ></textarea>
                 </div>
                 <button className="btn btn-primary mx-2"
                     onClick={handleUpClick} >Convert to uppercase</button>
-                    <button className="btn btn-primary mx-2"
+                <button className="btn btn-primary mx-2"
                     onClick={handleLowClick} >Convert to lowercase</button>
-                    <button className="btn btn-primary mx-2"
+                <button className="btn btn-primary mx-2"
                     onClick={handleClearClick} >Clear</button>
+                <button className="btn btn-primary mx-1" onClick={handleCopy}> Copy Text</button>
+                <button className="btn btn-primary mx-1" onClick={handleExtraSpaces}> Remove extra spaces</button>
+
             </form>
 
             <div className="container my-3">
